@@ -551,9 +551,9 @@ require('lazy').setup({
         pyright = {}, -- Python
         jdtls = {}, -- Java
         zls = {}, -- Zig
+        omnisharp = {}, -- .NET/C#
         -- gopls = {}, -- Go
         -- hyprls = {}, -- Hyprland
-        -- csharp_ls = {}, -- .NET/C#
 
         lua_ls = {
           -- cmd = { ... },
