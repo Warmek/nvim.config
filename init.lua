@@ -872,6 +872,16 @@ require('lazy').setup({
   {
     'ThePrimeagen/vim-be-good',
   },
+  {
+    'mfussenegger/nvim-jdtls',
+    config = function()
+      local config = {
+        cmd = {'/path/to/jdt-language-server/bin/jdtls'},
+        root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+      }
+      require('jdtls').start_or_attach(config)
+    end
+  },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -894,6 +904,7 @@ require('lazy').setup({
   require 'custom.plugins.render-markdown',
   require 'custom.plugins.transparent',
   require 'custom.plugins.alpha',
+  -- require 'custom.plugins.nvim-jdtls',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
