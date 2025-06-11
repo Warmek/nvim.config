@@ -905,6 +905,7 @@ require('lazy').setup({
   require 'custom.plugins.transparent',
   require 'custom.plugins.alpha',
   require 'custom.plugins.vimtex',
+  require 'custom.plugins.avante',
   -- require 'custom.plugins.nvim-jdtls',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
