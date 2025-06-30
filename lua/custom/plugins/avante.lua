@@ -9,7 +9,7 @@ return {
     providers = {
       ollama = {
         endpoint = "http://localhost:11434/",
-        model = "deepseek-r1:32b",
+        model = "deepseek-r1:14b",
       },
     }
     -- provider = "openai",
