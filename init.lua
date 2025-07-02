@@ -383,7 +383,9 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
+      {
+        'williamboman/mason.nvim'
+      },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -551,7 +553,8 @@ require('lazy').setup({
         clangd = {}, -- C/C++
         pyright = {}, -- Python
         zls = {}, -- Zig
-        omnisharp = {}, -- .NET/C#
+        -- omnisharp = {}, -- .NET/C#
+        roslyn = {}, -- .NET/C#
         -- gopls = {}, -- Go
         -- hyprls = {}, -- Hyprland
 
@@ -589,6 +592,13 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      require("mason").setup({
+          registries = {
+              "github:mason-org/mason-registry",
+              "github:Crashdummyy/mason-registry",
+          },
+      })
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
@@ -871,6 +881,15 @@ require('lazy').setup({
   },
   {
     'ThePrimeagen/vim-be-good',
+  },
+  {
+    "seblyng/roslyn.nvim",
+    ft = "cs",
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
+    opts = {
+        -- your configuration comes here; leave empty for default settings
+    },
   },
 
 
