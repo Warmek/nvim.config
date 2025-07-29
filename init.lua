@@ -560,6 +560,19 @@ require('lazy').setup({
         roslyn = {}, -- .NET/C#
         -- gopls = {}, -- Go
         -- hyprls = {}, -- Hyprland
+        html = {
+          format = {
+            templating = true,
+            wrapLineLength = 120,
+            wrapAttributes = 'auto',
+          },
+          hover = {
+            documentation = true,
+            references = true,
+          },
+        },
+        angularls = {}, -- npm -g install @angular/language-server@[the latest matching angular-version]  
+
 
         lua_ls = {
           -- cmd = { ... },
