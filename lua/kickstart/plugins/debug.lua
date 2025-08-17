@@ -95,6 +95,8 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'node-debug2-adapter',
+        'chrome-debug-adapter',
       },
     }
 
@@ -120,11 +122,158 @@ return {
       },
     }
 
+    -- Configure node-debug2-adapter for Node.js/TypeScript debugging
+    dap.adapters.node2 = {
+      type = 'executable',
+      command = 'node',
+      args = {vim.fn.resolve(vim.fn.stdpath('data') .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js')},
+    }
+
+    -- Configure chrome-debug-adapter for Chrome debugging
+    dap.adapters.chrome = {
+      type = 'executable',
+      command = 'node',
+      args = {vim.fn.resolve(vim.fn.stdpath('data') .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js')},
+    }
+
+    -- Angular/TypeScript specific debug configurations
+    for _, language in ipairs { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' } do
+      dap.configurations[language] = {
+        -- Debug single nodejs files
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Launch Node.js File',
+          program = '${file}',
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+        },
+        -- Debug nodejs processes (make sure to add --inspect when you run the process)
+        {
+          type = 'node2',
+          request = 'attach',
+          name = 'Attach to Node.js Process',
+          port = 9229,
+          restart = true,
+          sourceMaps = true,
+          localRoot = '${workspaceFolder}',
+          remoteRoot = null,
+          protocol = 'inspector',
+        },
+        -- Debug Angular application in Chrome
+        {
+          type = 'chrome',
+          request = 'launch',
+          name = 'Launch Angular App (WSL)',
+          url = 'https://localhost/path/', -- Update to your exact URL
+          webRoot = '${workspaceFolder}',
+          sourceMaps = true,
+          userDataDir = '${workspaceFolder}/.chrome-debug',
+          runtimeExecutable = '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
+          runtimeArgs = {
+            '--remote-debugging-port=9222',
+            '--no-first-run',
+            '--no-default-browser-check',
+            '--disable-extensions',
+            '--disable-web-security',
+            '--disable-features=VizDisplayCompositor',
+            '--user-data-dir=${workspaceFolder}/.chrome-debug',
+          },
+        },
+        -- Debug Angular application (attach to running Chrome)
+        {
+          type = 'chrome',
+          request = 'attach',
+          name = 'Attach to Chrome',
+          port = 9222,
+          webRoot = '${workspaceFolder}',
+          sourceMaps = true,
+        },
+        -- Debug Jest tests with Node.js
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Debug Jest Tests',
+          program = '${workspaceFolder}/node_modules/.bin/jest',
+          args = {
+            '--runInBand',
+            '--no-coverage',
+            '--no-cache',
+          },
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+          internalConsoleOptions = 'neverOpen',
+        },
+        -- Debug specific Jest test file
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Debug Current Jest Test',
+          program = '${workspaceFolder}/node_modules/.bin/jest',
+          args = {
+            '--runInBand',
+            '--no-coverage',
+            '--no-cache',
+            '${relativeFile}',
+          },
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+          internalConsoleOptions = 'neverOpen',
+        },
+        -- Debug Karma tests in Chrome
+        {
+          type = 'chrome',
+          request = 'launch',
+          name = 'Debug Karma Tests',
+          url = 'http://localhost:9876/debug.html',
+          webRoot = '${workspaceFolder}',
+          sourceMaps = true,
+          userDataDir = '${workspaceFolder}/.vscode/chrome-debug-profile',
+        },
+        -- Debug Angular CLI commands
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Debug Angular CLI',
+          program = '${workspaceFolder}/node_modules/@angular/cli/bin/ng',
+          args = { 'serve', '--source-map' },
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+        },
+        -- Debug Angular build process
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Debug Angular Build',
+          program = '${workspaceFolder}/node_modules/@angular/cli/bin/ng',
+          args = { 'build', '--source-map' },
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+        },
+        -- Divider for the launch.json derived configs
+        {
+          name = '----- ↓ launch.json configs ↓ -----',
+          type = '',
+          request = 'launch',
+        },
+      }
+    end
+
     -- Change breakpoint icons
     -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
     -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
     -- local breakpoint_icons = vim.g.have_nerd_font
-    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
     --   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
     -- for type, icon in pairs(breakpoint_icons) do
     --   local tp = 'Dap' .. type

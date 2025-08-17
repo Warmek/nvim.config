@@ -391,6 +391,7 @@ require('lazy').setup({
       },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'b0o/schemastore.nvim',
 
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
@@ -555,24 +556,11 @@ require('lazy').setup({
       local servers = {
         clangd = {}, -- C/C++
         pyright = {}, -- Python
-        zls = {}, -- Zig
+        -- zls = {}, -- Zig
         -- omnisharp = {}, -- .NET/C#
         roslyn = {}, -- .NET/C#
         -- gopls = {}, -- Go
         -- hyprls = {}, -- Hyprland
-        html = {
-          format = {
-            templating = true,
-            wrapLineLength = 120,
-            wrapAttributes = 'auto',
-          },
-          hover = {
-            documentation = true,
-            references = true,
-          },
-        },
-        angularls = {}, -- npm -g install @angular/language-server@[the latest matching angular-version]  
-
 
         lua_ls = {
           -- cmd = { ... },
@@ -585,6 +573,84 @@ require('lazy').setup({
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
+        ts_ls = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+          },
+        },
+
+        -- Angular Language Server
+        angularls = {
+          filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
+          root_dir = require('lspconfig').util.root_pattern('angular.json', 'project.json'),
+        },
+
+        -- HTML with enhanced Angular support
+        html = {
+          filetypes = { 'html', 'templ' },
+          settings = {
+            html = {
+              format = {
+                templating = true,
+                wrapLineLength = 120,
+                wrapAttributes = 'auto',
+              },
+              hover = {
+                documentation = true,
+                references = true,
+              },
+            },
+          },
+        },
+
+        -- CSS/SCSS
+        cssls = {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            scss = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+          },
+        },
+
+        -- JSON for Angular configuration files
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
             },
           },
         },
@@ -606,6 +672,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettier', -- For TypeScript, HTML, CSS formatting
+        'eslint_d', -- For TypeScript/JavaScript linting
+        'angular-language-server', -- Angular LSP
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -669,6 +738,12 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'black' },
         nix = { 'nixfmt' },
+        typescript = { 'prettier' },
+        javascript = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        scss = { 'prettier' },
+        json = { 'prettier' },
       },
     },
   },
@@ -876,6 +951,14 @@ require('lazy').setup({
         'query',
         'vim',
         'vimdoc',
+        'typescript',
+        'tsx',
+        'javascript',
+        'jsdoc',
+        'css',
+        'scss',
+        'json',
+        'yaml',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -933,6 +1016,7 @@ require('lazy').setup({
   require 'custom.plugins.vimtex',
   -- require 'custom.plugins.avante',
   require 'custom.plugins.tmux-navigator',
+  require 'custom.plugins.angular',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
