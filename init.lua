@@ -18,6 +18,23 @@ vim.opt.number = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
+local function toggle_line_numbers()
+  if vim.wo.relativenumber then
+    vim.wo.relativenumber = false
+    vim.wo.number = true
+    print("Switched to normal line numbers")
+  else
+    vim.wo.relativenumber = true
+    vim.wo.number = true
+    print("Switched to relative line numbers")
+  end
+end
+
+-- Set the keybinding
+vim.keymap.set('n', '<leader>tn', toggle_line_numbers, {
+  desc = 'Toggle between relative and normal line numbers',
+  silent = true 
+})
 
 vim.opt.wrap = false
 
