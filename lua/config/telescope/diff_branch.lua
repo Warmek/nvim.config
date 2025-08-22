@@ -33,7 +33,7 @@ local function get_git_branches()
 
   local branches = {}
   for line in handle:lines() do
-    local branch = line:gsub('^%s*%*?%s*', ''):gsub('^origin/', '')
+    local branch = line:gsub('^%s*%*?%s*', '')
     if branch ~= '' and not branch:match 'HEAD' then
       table.insert(branches, branch)
     end
