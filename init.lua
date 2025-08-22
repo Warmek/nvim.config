@@ -116,6 +116,7 @@ vim.keymap.set('n', '<leader>tn', toggle_line_numbers, {
 
 vim.keymap.set('n', '<C-w>', '<cmd>FloatermToggle<CR>')
 vim.keymap.set('t', '<C-w>', '<cmd>FloatermToggle<CR>')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -359,6 +360,11 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      -- In your main config file or keymap file
+      vim.keymap.set('n', '<leader>gd', function()
+        require('config.telescope.diff_branch').diff_status()
+      end, { desc = 'Live grep diff between branches' })
 
       vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'none' })
 
