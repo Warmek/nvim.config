@@ -22,19 +22,13 @@ local function toggle_line_numbers()
   if vim.wo.relativenumber then
     vim.wo.relativenumber = false
     vim.wo.number = true
-    print("Switched to normal line numbers")
+    print 'Switched to normal line numbers'
   else
     vim.wo.relativenumber = true
     vim.wo.number = true
-    print("Switched to relative line numbers")
+    print 'Switched to relative line numbers'
   end
 end
-
--- Set the keybinding
-vim.keymap.set('n', '<leader>tn', toggle_line_numbers, {
-  desc = 'Toggle between relative and normal line numbers',
-  silent = true 
-})
 
 vim.opt.wrap = false
 
@@ -115,6 +109,13 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
+vim.keymap.set('n', '<leader>tn', toggle_line_numbers, {
+  desc = 'Toggle between relative and normal line numbers',
+  silent = true,
+})
+
+vim.keymap.set('n', '<C-w>', '<cmd>FloatermToggle<CR>')
+vim.keymap.set('t', '<C-w>', '<cmd>FloatermToggle<CR>')
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -359,7 +360,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-      vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+      vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'none' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -407,7 +408,7 @@ require('lazy').setup({
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       {
-        'williamboman/mason.nvim'
+        'williamboman/mason.nvim',
       },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -594,7 +595,7 @@ require('lazy').setup({
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = { disable = { 'missing-fields' } },
               format = {
-                enable = false
+                enable = false,
               },
             },
           },
@@ -701,12 +702,12 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      require("mason").setup({
-          registries = {
-              "github:mason-org/mason-registry",
-              "github:Crashdummyy/mason-registry",
-          },
-      })
+      require('mason').setup {
+        registries = {
+          'github:mason-org/mason-registry',
+          'github:Crashdummyy/mason-registry',
+        },
+      }
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
@@ -830,7 +831,7 @@ require('lazy').setup({
           -- Select the [n]ext item
           ['<C-n>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-o>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -1005,15 +1006,14 @@ require('lazy').setup({
     'ThePrimeagen/vim-be-good',
   },
   {
-    "seblyng/roslyn.nvim",
-    ft = "cs",
+    'seblyng/roslyn.nvim',
+    ft = 'cs',
     ---@module 'roslyn.config'
     ---@type RoslynNvimConfig
     opts = {
-        -- your configuration comes here; leave empty for default settings
+      -- your configuration comes here; leave empty for default settings
     },
   },
-
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1040,6 +1040,7 @@ require('lazy').setup({
   -- require 'custom.plugins.avante',
   require 'custom.plugins.tmux-navigator',
   require 'custom.plugins.angular',
+  require 'custom.plugins.flowterm',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
