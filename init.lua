@@ -766,6 +766,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        c = { 'prettier' },
         python = { 'black' },
         nix = { 'nixfmt' },
         typescript = { 'prettier' },
