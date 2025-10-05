@@ -114,8 +114,8 @@ vim.keymap.set('n', '<leader>tn', toggle_line_numbers, {
   silent = true,
 })
 
-vim.keymap.set('n', '<C-w>', '<cmd>FloatermToggle<CR>')
-vim.keymap.set('t', '<C-w>', '<cmd>FloatermToggle<CR>')
+vim.keymap.set('n', '<C-t>', '<cmd>FloatermToggle<CR>')
+vim.keymap.set('t', '<C-t>', '<cmd>FloatermToggle<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
