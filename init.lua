@@ -1044,10 +1044,10 @@ require('lazy').setup({
   require 'custom.plugins.transparent',
   require 'custom.plugins.alpha',
   require 'custom.plugins.vimtex',
-  -- require 'custom.plugins.avante',
   require 'custom.plugins.tmux-navigator',
   require 'custom.plugins.angular',
   require 'custom.plugins.flowterm',
+  require 'custom.plugins.dadbod',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
