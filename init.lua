@@ -1,4 +1,4 @@
--- Set <space> as the leader key
+-- Set <space> as the leader keyu
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -94,7 +94,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<C-Q>', '<cmd>copen<CR>', { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>', { desc = 'Move next in quickfix' })
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>', { desc = 'Move previous in quickfix' })
 
+vim.keymap.set('n', '<M-j>', '<cmd>lnext<CR>', { desc = 'Move next in quickfix' })
+vim.keymap.set('n', '<M-k>', '<cmd>lprev<CR>', { desc = 'Move previous in quickfix' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -1045,7 +1050,7 @@ require('lazy').setup({
   require 'custom.plugins.transparent',
   require 'custom.plugins.alpha',
   require 'custom.plugins.vimtex',
-  require 'custom.plugins.tmux-navigator',
+  -- require 'custom.plugins.tmux-navigator',
   require 'custom.plugins.angular',
   require 'custom.plugins.flowterm',
   require 'custom.plugins.dadbod',
