@@ -98,8 +98,6 @@ vim.keymap.set('n', '<C-Q>', '<cmd>copen<CR>', { desc = 'Open diagnostic [Q]uick
 vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>', { desc = 'Move next in quickfix' })
 vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>', { desc = 'Move previous in quickfix' })
 
-vim.keymap.set('n', '<M-j>', '<cmd>lnext<CR>', { desc = 'Move next in quickfix' })
-vim.keymap.set('n', '<M-k>', '<cmd>lprev<CR>', { desc = 'Move previous in quickfix' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
