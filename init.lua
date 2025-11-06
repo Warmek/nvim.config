@@ -155,6 +155,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+require 'custom.scripts.translate'
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -1024,7 +1025,7 @@ require('lazy').setup({
       -- your configuration comes here; leave empty for default settings
     },
   },
-  {'unblevable/quick-scope'},
+  { 'unblevable/quick-scope' },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
