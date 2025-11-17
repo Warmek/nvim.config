@@ -12,7 +12,7 @@ return {
     vim.keymap.set('n', '<leader>a', function()
       harpoon:list():add()
       vim.api.nvim_echo({{'File added!', 'None'}}, false, {})    end)
-    vim.keymap.set('n', '<M-e>', function()
+    vim.keymap.set('n', '<C-e>', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
 
